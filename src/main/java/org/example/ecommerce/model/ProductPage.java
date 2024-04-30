@@ -1,12 +1,19 @@
 package org.example.ecommerce.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.example.ecommerce.dto.ProductDTO;
+import org.example.ecommerce.mapper.ProductDTOMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
 
-public class ProductPage extends BasicResponse {
+public class ProductPage {
+    private final ProductDTOMapper mapper;
+
     @JsonProperty
     private final List<ProductDTO> products;
 
@@ -16,30 +23,14 @@ public class ProductPage extends BasicResponse {
     @JsonProperty
     int currentPage;
 
-    private ProductDTO toDTO(Product product) {
-        return new ProductDTO(product.getId(), product.getTitle(), product.getPrice(),
-                product.getImgName(), product.getCategory().getName());
-    }
-
-    public ProductPage(int statusCode, Page<Product> productPage) {
-        super(statusCode);
-        this.products = productPage.map(this::toDTO).toList();
+    public ProductPage(ProductDTOMapper mapper, Page<Product> productPage) {
+        this.mapper = mapper;
+        this.products = productPage.map(mapper).toList();
         this.totalPages = productPage.getTotalPages();
         this.currentPage = productPage.getPageable().getPageNumber();
     }
 
-    public ProductPage(int statusCode, List<Product> products) {
-        super(statusCode);
-        this.products = products.stream().map(this::toDTO).toList();
-        this.totalPages = 1;
-        this.currentPage = 0;
-    }
-
-    public static ProductPage ok(Page<Product> productPage) {
-        return new ProductPage(200, productPage);
-    }
-
-    public static ProductPage ok(List<Product> products) {
-        return new ProductPage(200, products);
+    public static ProductPage ok(ProductDTOMapper mapper, Page<Product> productPage) {
+        return new ProductPage(mapper, productPage);
     }
 }

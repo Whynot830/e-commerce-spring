@@ -14,12 +14,13 @@ import java.util.List;
 @AllArgsConstructor
 @Table(name = "products", uniqueConstraints = {@UniqueConstraint(columnNames = "title")})
 public class Product {
-
     @Id
     @GeneratedValue
     private Long id;
 
     private String title;
+
+    private String description;
 
     private BigDecimal price;
 

@@ -18,7 +18,6 @@ import java.sql.Types;
         name = "images",
         uniqueConstraints = @UniqueConstraint(columnNames = "name")
 )
-
 public class Image {
     @Id
     @GeneratedValue

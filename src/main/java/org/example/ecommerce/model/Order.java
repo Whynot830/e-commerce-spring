@@ -15,7 +15,6 @@ import java.util.List;
 @AllArgsConstructor
 @Table(name = "orders")
 public class Order {
-
     @Id
     @GeneratedValue
     private Long id;

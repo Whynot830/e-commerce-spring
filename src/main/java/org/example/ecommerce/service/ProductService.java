@@ -10,7 +10,6 @@ import org.example.ecommerce.model.ProductPage;
 import org.example.ecommerce.repository.CategoryRepository;
 import org.example.ecommerce.repository.OrderItemRepository;
 import org.example.ecommerce.repository.ProductRepository;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -22,10 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static org.example.ecommerce.model.ProductResponse.ok;
 import static org.example.ecommerce.util.StrChecker.isNullOrBlank;
-import static org.springframework.data.domain.Sort.Direction.ASC;
-import static org.springframework.data.domain.Sort.Direction.valueOf;
 
 @Service
 @RequiredArgsConstructor
@@ -38,7 +34,8 @@ public class ProductService {
     private final ProductDTOMapper mapper;
 
     private Product save(ProductDTO productDTO, MultipartFile file) {
-        if (isNullOrBlank(productDTO.title()) || isNullOrBlank(productDTO.category()) || productDTO.price() == null)
+        if (isNullOrBlank(productDTO.title()) || isNullOrBlank(productDTO.category())
+                || productDTO.price() == null || isNullOrBlank(productDTO.description()))
             throw new IllegalArgumentException("Some properties are null or blank");
 
         if (productDTO.price().compareTo(BigDecimal.ZERO) < 0)
@@ -50,6 +47,7 @@ public class ProductService {
 
         var product = Product.builder()
                 .title(productDTO.title())
+                .description(productDTO.description())
                 .price(productDTO.price())
                 .category(category)
                 .build();
@@ -84,10 +82,10 @@ public class ProductService {
                     .getCategory(categoryName)
                     .orElseThrow(() -> new IllegalArgumentException("Category with given name not found"));
             var products = productRepo.findByCategory(category, pageable);
-            return ProductPage.ok(products);
+            return ProductPage.ok(mapper, products);
         }
         var products = productRepo.findAll(pageable);
-        return ProductPage.ok(products);
+        return ProductPage.ok(mapper, products);
     }
 
     public ProductDTO read(Long id) {
@@ -107,6 +105,7 @@ public class ProductService {
                 throw new IllegalArgumentException("Price must be a non-negative value");
 
             if (!isNullOrBlank(newProduct.title())) product.setTitle(newProduct.title());
+            if (!isNullOrBlank(newProduct.description())) product.setDescription(newProduct.description());
             if (newProduct.price() != null) product.setPrice(newProduct.price());
             if (!isNullOrBlank(newProduct.category())) product.setCategory(category);
         }

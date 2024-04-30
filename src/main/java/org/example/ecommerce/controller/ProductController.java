@@ -2,11 +2,8 @@ package org.example.ecommerce.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.example.ecommerce.model.BasicResponse;
 import org.example.ecommerce.dto.ProductDTO;
-import org.example.ecommerce.model.Product;
 import org.example.ecommerce.service.ProductService;
-import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
