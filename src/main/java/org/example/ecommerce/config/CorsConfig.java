@@ -12,7 +12,7 @@ public class CorsConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowCredentials(true)
-                .allowedOrigins("http://localhost:5173", "http://localhost:5174", "http://localhost:8081", "http://localhost:3000", "http://192.168.0.134:5173")
+                .allowedOrigins("https://e-commerce-react-ru.onrender.com", "http://localhost:5173", "http://localhost:5174", "http://localhost:8081", "http://localhost:3000", "http://192.168.0.134:5173")
                 .allowedMethods("*");
     }
 }
