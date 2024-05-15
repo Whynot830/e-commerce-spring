@@ -4,10 +4,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.example.ecommerce.dto.ProductDTO;
 import org.example.ecommerce.service.ProductService;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -17,12 +19,24 @@ import java.util.List;
 public class ProductController {
     private final ProductService productService;
 
+//    @PostMapping()
+//    public ResponseEntity<ProductDTO> create(
+//            @RequestPart ProductDTO productDTO,
+//            @RequestPart(required = false) MultipartFile file
+//    ) {
+//        var savedProduct = productService.create(productDTO, file);
+//        return ResponseEntity.created(null).body(savedProduct);
+//    }
+
     @PostMapping()
     public ResponseEntity<ProductDTO> create(
-            @RequestPart ProductDTO productDTO,
-            @RequestPart(required = false) MultipartFile file
+            @RequestParam String title,
+            @RequestParam String description,
+            @RequestParam BigDecimal price,
+            @RequestParam String category,
+            @RequestParam(required = false) MultipartFile file
     ) {
-        var savedProduct = productService.create(productDTO, file);
+        var savedProduct = productService.create(new ProductDTO(null, title, description, price, null, category), file);
         return ResponseEntity.created(null).body(savedProduct);
     }
 
@@ -39,10 +53,11 @@ public class ProductController {
     public ResponseEntity<?> read(
             @RequestParam(required = false) String category,
             @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "12") Integer limit,
             @RequestParam(defaultValue = "title") String sort,
             @RequestParam(defaultValue = "asc") String order
     ) {
-        var response = productService.read(category, page, sort, order);
+        var response = productService.read(category, page, limit, sort, order);
         return ResponseEntity.ok(response);
     }
 

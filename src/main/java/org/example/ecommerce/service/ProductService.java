@@ -49,6 +49,7 @@ public class ProductService {
                 .title(productDTO.title())
                 .description(productDTO.description())
                 .price(productDTO.price())
+                .imgName(productDTO.imgName())
                 .category(category)
                 .build();
 
@@ -75,8 +76,8 @@ public class ProductService {
         return savedProducts.stream().map(mapper).toList();
     }
 
-    public ProductPage read(String categoryName, Integer page, String sort, String order) {
-        Pageable pageable = PageRequest.of(page, 10, Sort.Direction.fromString(order), sort);
+    public ProductPage read(String categoryName, Integer page, Integer limit, String sort, String order) {
+        Pageable pageable = PageRequest.of(page, limit, Sort.Direction.fromString(order), sort);
         if (categoryName != null) {
             var category = categoryService
                     .getCategory(categoryName)

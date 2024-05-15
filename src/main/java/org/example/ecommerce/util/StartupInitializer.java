@@ -24,33 +24,31 @@ public class StartupInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) {
         try {
-            userService.create(new UserDTO("admin", "aminfury@mail.ru",
+            userService.create(new UserDTO("admin", "adm1n.e.commerce@mail.ru",
                     "admin", "ADMIN"));
         } catch (DataIntegrityViolationException ignored) {
         }
         try {
-            categoryService.create(Category.builder().name("storage").build());
+            categoryService.create(Category.builder().name("кровати").build());
+            categoryService.create(Category.builder().name("стулья").build());
+            categoryService.create(Category.builder().name("столы").build());
         } catch (DataIntegrityViolationException ignored) {
         }
         try {
+
             productService.create(List.of(
-                    new ProductDTO(null, "Kingston A400 SATA SA400S37/480G", "Desc1", BigDecimal.valueOf(22.99), "kingston-a400.webp", "storage"),
-                    new ProductDTO(null, "Samsung 980 M.2 MZ-V8V250BW", "Desc1", BigDecimal.valueOf(41.99), "samsung-980-250gb.webp", "storage"),
-                    new ProductDTO(null, "WD Blue SN570 M.2 WDS100T3B0C", "Desc1", BigDecimal.valueOf(89.99), "wd-blue.webp", "storage"),
-                    new ProductDTO(null, "AMD Radeon SATA R5SL128G", "Desc1", BigDecimal.valueOf(14.99), "amd-radeon.webp", "storage"),
-                    new ProductDTO(null, "Netac SA500 SATA NT01SA500-1T0-S3X", "Desc1", BigDecimal.valueOf(52.99), "netac-sa500.webp", "storage"),
-                    new ProductDTO(null, "GIGABYTE SATA (GP-GSTFS31256GTND)", "Desc1", BigDecimal.valueOf(24.99), "gigabyte-256gb.webp", "storage"),
-                    new ProductDTO(null, "Patriot Memory SATA P210S512G25", "Desc1", BigDecimal.valueOf(29.99), "patriot-p210.webp", "storage"),
-                    new ProductDTO(null, "XPG SX6000 Lite M.2 SX6000", "Desc1", BigDecimal.valueOf(34.99), "xpg-sx6000.webp", "storage"),
-                    new ProductDTO(null, "Samsung 870 QVO SATA MZ-77Q1T0BW", "Desc1", BigDecimal.valueOf(80.99), "samsung-870-qvo.webp", "storage"),
-                    new ProductDTO(null, "Hikvision SATA HS-SSD-C100/120G", "Desc1", BigDecimal.valueOf(13.99), "hikvision-120gb.webp", "storage"),
-                    new ProductDTO(null, "Netac NV3000 M.2 NT01NV3000-500-E4X", "Desc1", BigDecimal.valueOf(29.99), "netac-nv3000.webp", "storage"),
-                    new ProductDTO(null, "HP S700 SATA 6MC15AA#ABB", "Desc1", BigDecimal.valueOf(59.99), "hp-s700.webp", "storage"),
-                    new ProductDTO(null, "ADATA Ultimate SU650 SATA ASU650SS-240GT-R", "Desc1", BigDecimal.valueOf(19.99), "adata-su650.webp", "storage"),
-                    new ProductDTO(null, "Apacer PANTHER 512 ГБ SATA AP512GAS350-1", "Desc1", BigDecimal.valueOf(30.99), "apacer-panther.webp", "storage"),
-                    new ProductDTO(null, "Crucial BX SATA CT240BX500SSD1", "Desc1", BigDecimal.valueOf(26.99), "crucial-bx-240gb.webp", "storage"),
-                    new ProductDTO(null, "KingSpec M.2 NT-256", "Desc1", BigDecimal.valueOf(17.99), "kingspec-m2-256gb.webp", "storage")
-            ));
+//                    new ProductDTO(null, "Wooden Bed with Striped Bedding", "A rustic bed frame crafted from distressed wood with a cozy striped bedding set", BigDecimal.valueOf(799.99), "bed-wood.jpg", "beds"),
+                    new ProductDTO(null, "Деревянная кровать с полосатым постельным бельем", "Кровать в деревенском стиле с каркасом из потертого дерева и уютным комплектом постельного белья в полоску", BigDecimal.valueOf(799.99), "bed-wood.jpg", "кровати"),
+//                    new ProductDTO(null, "Upholstered Bed with Cushioned Headboard", "A plush and stylish bed with a tufted, cushioned headboard in soft beige upholstery", BigDecimal.valueOf(1199.99), "bed-beige.webp", "beds"),
+                    new ProductDTO(null, "Мягкая кровать с мягким изголовьем", "Роскошная и стильная кровать с мягким изголовьем в мягкой бежевой обивке", BigDecimal.valueOf(1199.99), "bed-beige.webp", "кровати"),
+//                    new ProductDTO(null, "Contemporary Platform Bed", "A sleek and modern platform bed with a low-profile design in a rich brown upholstery", BigDecimal.valueOf(999.99), "bed-beige-2.webp", "beds"),
+                    new ProductDTO(null, "Современная кровать на платформе", "Изящная и современная кровать-платформа с низкопрофильным дизайном и богатой коричневой обивкой", BigDecimal.valueOf(999.99), "bed-beige-2.webp", "кровати"),
+//                    new ProductDTO(null, "Tufted Bed with Wingback Headboard", "A luxurious bed with a tall, wingback-style headboard featuring deep button tufting in a rich navy blue velvet", BigDecimal.valueOf(1499.99), "bed-blue.jpg", "beds"),
+                    new ProductDTO(null, "Кровать с тафтингом и откидным изголовьем", "Роскошная кровать с высоким изголовьем в виде откидной спинки и глубоким тафтингом на пуговицах из насыщенного темно-синего бархата", BigDecimal.valueOf(1499.99), "bed-blue.jpg", "кровати"),
+//                    new ProductDTO(null, "Minimalist Bed with Upholstered Frame", "A streamlined and minimalist bed with a simple upholstered frame in a soft gray hue", BigDecimal.valueOf(899.99), "bed-brown.jpg", "beds")
+            new ProductDTO(null, "Минималистская кровать с мягким каркасом", "Обтекаемая и минималистичная кровать с простым каркасом из мягкой обивки мягкого серого оттенка", BigDecimal.valueOf(899.99), "bed-brown.jpg", "кровати")
+
+                    ));
         } catch (DataIntegrityViolationException ignored) {
         }
     }

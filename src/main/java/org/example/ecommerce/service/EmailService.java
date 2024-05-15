@@ -15,10 +15,9 @@ public class EmailService {
     private final JavaMailSender javaMailSender;
     @Value("${spring.mail.username}")
     String username;
-    String subject = "Your order in WHYNOTPC shop";
 
     @Async
-    public void sendMail(String receiver, String body) throws MessagingException {
+    public void sendMail(String subject, String receiver, String body) throws MessagingException {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
 

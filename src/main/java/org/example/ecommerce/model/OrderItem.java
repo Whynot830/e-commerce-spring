@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.Iterator;
 
 @Data
 @Entity
@@ -33,14 +34,6 @@ public class OrderItem {
     @PostPersist
     private void postPersistOrUpdate() {
         recalculateTotal();
-    }
-
-    @PreRemove
-    private void preRemove() {
-        if (order != null) {
-            order.getItems().remove(this);
-            order.recalculateTotal();
-        }
     }
 
     public void recalculateTotal() {

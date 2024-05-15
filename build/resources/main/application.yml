@@ -34,11 +34,11 @@ application:
   security:
     jwt:
       secret-key: 34743777217A25432A462D4A614E645267556B58703273357638782F413F4428
-      expiration: 86400000
+      expiration: 3600000
 #      expiration: 5000
       refresh-token:
         expiration: 604800000
-#        expiration: 60000
+#        expiration: 10000
 #logging:
 #  level:
 #    org:

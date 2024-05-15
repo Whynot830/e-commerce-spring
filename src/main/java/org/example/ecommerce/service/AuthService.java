@@ -3,8 +3,10 @@ package org.example.ecommerce.service;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.example.ecommerce.dto.AuthResponse;
 import org.example.ecommerce.dto.UserDTO;
 import org.example.ecommerce.exception.NoAuthenticationException;
+import org.example.ecommerce.mapper.UserDTOMapper;
 import org.example.ecommerce.model.User;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -19,6 +21,7 @@ public class AuthService {
     private final JwtService jwtService;
     private final AuthenticationManager authManager;
     private final UserService userService;
+    private final UserDTOMapper mapper;
 
     private User getUserByJwt(String jwt) {
         try {
@@ -35,7 +38,7 @@ public class AuthService {
         userService.create(acceptedDTO);
     }
 
-    public String[] login(UserDTO userDTO) {
+    public AuthResponse login(UserDTO userDTO) {
         String usernameOrEmail = isNullOrBlank(userDTO.username()) ? userDTO.email() : userDTO.username();
         try {
             authManager.authenticate(
@@ -51,15 +54,15 @@ public class AuthService {
                 );
         String accessJwt = jwtService.generateToken(user);
         String refreshJwt = jwtService.generateRefreshToken(user);
-        return new String[]{accessJwt, refreshJwt};
+        return new AuthResponse(mapper.apply(user), accessJwt, refreshJwt);
     }
 
-    public String[] refresh(String refreshJwt) {
+    public AuthResponse refresh(String refreshJwt) {
         try {
             var user = getUserByJwt(refreshJwt);
             var newAccessJwt = jwtService.generateToken(user);
             var newRefreshJwt = jwtService.generateRefreshToken(user);
-            return new String[]{newAccessJwt, newRefreshJwt};
+            return new AuthResponse(mapper.apply(user), newAccessJwt, newRefreshJwt);
         } catch (IllegalArgumentException ex) {
             throw new NoAuthenticationException();
         }

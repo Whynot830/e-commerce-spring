@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -24,9 +25,10 @@ public class Order {
 
     private BigDecimal total;
 
+    LocalDateTime createdAt;
+
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> items;
-
 
     @JsonIgnore
     @ToString.Exclude
